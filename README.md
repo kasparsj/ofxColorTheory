@@ -1,4 +1,4 @@
-Color schemes:
+Supported color schemes:
 
 * Analogous
 * Complementary

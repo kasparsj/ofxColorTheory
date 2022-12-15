@@ -4,13 +4,14 @@
 
 namespace ofxColorTheory {
     
-    class Monochrome : public ColorWheelScheme {
+    template<typename T>
+    class Monochrome_ : public ColorWheelScheme_<T> {
         
     public:
-        Monochrome() : ColorWheelScheme() {
+        Monochrome_() : ColorWheelScheme_<T>() {
             
         }
-        Monochrome(ofColor primaryColor) : ColorWheelScheme(primaryColor) {
+        Monochrome_(T primaryColor) : ColorWheelScheme_<T>(primaryColor) {
             generate();
         }
         
@@ -18,5 +19,7 @@ namespace ofxColorTheory {
         void generate();
         
     };
+
+    typedef Monochrome_<ofColor> Monochrome;
     
 }

@@ -4,13 +4,14 @@
 
 namespace ofxColorTheory {
 
-    class Compound : public ColorWheelScheme {
+    template<typename T>
+    class Compound_ : public ColorWheelScheme_<T> {
         
     public:
-        Compound() : ColorWheelScheme() {
+        Compound_() : ColorWheelScheme_<T>() {
             
         }
-        Compound(ofColor primaryColor) : ColorWheelScheme(primaryColor) {
+        Compound_(T primaryColor) : ColorWheelScheme_<T>(primaryColor) {
             generate();
         }
         
@@ -18,5 +19,7 @@ namespace ofxColorTheory {
         void generate();
         
     };
+
+    typedef Compound_<ofColor> Compound;
     
 }

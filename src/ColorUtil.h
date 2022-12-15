@@ -11,7 +11,8 @@ namespace ofxColorTheory {
     class ColorUtil {
         
     public:
-        static std::vector<ofColor> interpolate(const std::vector<ofColor> & colors, int steps);
+        template<typename T>
+        static std::vector<T> interpolate(const std::vector<T> & colors, int steps);
         static ofColor rybRotate(ofColor color, float angle);
         static ofPixels getPixels(const std::vector<ofColor> & colors);
         static std::vector<ofColor> getColors(const ofPixels & pixels);

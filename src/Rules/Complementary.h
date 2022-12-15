@@ -4,25 +4,28 @@
 
 namespace ofxColorTheory {
     
-    class Complementary : public ColorWheelScheme {
+    template<typename T>
+    class Complementary_ : public ColorWheelScheme_<T> {
         
     public:
-        Complementary() : ColorWheelScheme() {
+        Complementary_() : ColorWheelScheme_<T>() {
             
         }
-        Complementary(ofColor primaryColor) : ColorWheelScheme(primaryColor) {
+        Complementary_(T primaryColor) : ColorWheelScheme_<T>(primaryColor) {
             generate();
         }
-        std::vector<ofColor> interpolate(int steps, std::vector<ofColor> &colors);
-        std::vector<ofColor> interpolate(int num) {
-            return interpolate(num, colors);
+        std::vector<T> interpolate(int steps, std::vector<T> &colors);
+        std::vector<T> interpolate(int num) {
+            return interpolate(num, this->colors);
         }
         
     protected:
         void generate();
-        ofColor getComplement();
-        ofColor adjust(ofColor color, float threshold);
+        T getComplement();
+        T adjust(T color, float threshold);
         
     };
+
+    typedef Complementary_<ofColor> Complementary;
     
 }

@@ -1,18 +1,25 @@
 #include "Triad.h"
 #include "ColorUtil.h"
 
-using namespace ofxColorTheory;
+namespace ofxColorTheory {
 
-void Triad::generate() {
-	colors.push_back(primaryColor);
-	float limit = ofColor::limit();
-	float bri = primaryColor.getBrightness()/limit;
-	
-	ofColor c1 = ColorUtil::rybRotate(primaryColor, angle);
-	c1.setBrightness((bri+.1f)*limit);
-	colors.push_back(c1);
-	
-	ofColor c2 = ColorUtil::rybRotate(primaryColor, -angle);
-	c2.setBrightness((bri+.1f)*limit);
-	colors.push_back(c2);
+template<typename T>
+void Triad_<T>::generate() {
+    this->colors.push_back(this->primaryColor);
+    float limit = T::limit();
+    float bri = this->primaryColor.getBrightness()/limit;
+    
+    T c1 = ColorUtil::rybRotate(this->primaryColor, angle);
+    c1.setBrightness((bri+.1f)*limit);
+    this->colors.push_back(c1);
+    
+    T c2 = ColorUtil::rybRotate(this->primaryColor, -angle);
+    c2.setBrightness((bri+.1f)*limit);
+    this->colors.push_back(c2);
+}
+
+template class Triad_<ofColor>;
+template class Triad_<ofFloatColor>;
+
+
 }

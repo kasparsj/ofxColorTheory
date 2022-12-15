@@ -4,13 +4,14 @@
 
 namespace ofxColorTheory {
     
-    class FlippedCompound : public ColorWheelScheme {
+    template<typename T>
+    class FlippedCompound_ : public ColorWheelScheme_<T> {
         
     public:
-        FlippedCompound() : ColorWheelScheme() {
+        FlippedCompound_() : ColorWheelScheme_<T>() {
             
         }
-        FlippedCompound(ofColor primaryColor) : ColorWheelScheme(primaryColor) {
+        FlippedCompound_(T primaryColor) : ColorWheelScheme_<T>(primaryColor) {
             generate();
         }
         
@@ -18,5 +19,7 @@ namespace ofxColorTheory {
         void generate();
         
     };
+
+    typedef FlippedCompound_<ofColor> FlippedCompound;
     
 }

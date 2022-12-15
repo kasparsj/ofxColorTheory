@@ -4,13 +4,14 @@
 
 namespace ofxColorTheory {
     
-    class Analogous : public ColorWheelScheme {
+    template<typename T>
+    class Analogous_ : public ColorWheelScheme_<T> {
         
     public:
-        Analogous(float angle = 10, float contrast = 25) : angle(angle), contrast(contrast), ColorWheelScheme() {
+        Analogous_(float angle = 10, float contrast = 25) : angle(angle), contrast(contrast), ColorWheelScheme_<T>() {
             
         }
-        Analogous(ofColor primaryColor, float angle = 10, float contrast = 25) : angle(angle), contrast(contrast), ColorWheelScheme(primaryColor) {
+        Analogous_(T primaryColor, float angle = 10, float contrast = 25) : angle(angle), contrast(contrast), ColorWheelScheme_<T>(primaryColor) {
             generate();
         }
         
@@ -22,5 +23,7 @@ namespace ofxColorTheory {
         float contrast;
         
     };
+
+    typedef Analogous_<ofColor> Analogous;
     
 }

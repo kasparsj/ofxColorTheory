@@ -4,13 +4,14 @@
 
 namespace ofxColorTheory {
     
-    class Tetrad : public ColorWheelScheme {
+    template<typename T>
+    class Tetrad_ : public ColorWheelScheme_<T> {
         
     public:
-        Tetrad(float angle = 90, bool alt = false) : angle(angle), alt(alt), ColorWheelScheme() {
+        Tetrad_(float angle = 90, bool alt = false) : angle(angle), alt(alt), ColorWheelScheme_<T>() {
             
         }
-        Tetrad(ofColor primaryColor, float angle = 90, bool alt = false) : angle(angle), alt(alt), ColorWheelScheme(primaryColor) {
+        Tetrad_(T primaryColor, float angle = 90, bool alt = false) : angle(angle), alt(alt), ColorWheelScheme_<T>(primaryColor) {
             generate();
         }
         
@@ -22,5 +23,7 @@ namespace ofxColorTheory {
         float alt;
         
     };
+
+    typedef Tetrad_<ofColor> Tetrad;
     
 }

@@ -6,28 +6,32 @@
 
 namespace ofxColorTheory {
 
-    class ColorScheme {
+    template<typename T>
+    class ColorScheme_ {
         
     public:
-        std::vector<ofColor> & getColors() {
+        std::vector<T> & getColors() {
             return colors;
         }
         ofPixels getPixels() {
             return ColorUtil::getPixels(colors);
         }
-        ofColor & getColor(int i) {
+        T & getColor(int i) {
             return colors.at(i % colors.size());
         }
-        ofColor & getGeneratedColor(int i) {
+        T & getGeneratedColor(int i) {
             return colors.at(1 + i % (colors.size() - 1));
         }
-        virtual std::vector<ofColor> interpolate(int num) {
+        virtual std::vector<T> interpolate(int num) {
             return ColorUtil::interpolate(colors, num);
         }
         
     protected:
-        std::vector<ofColor> colors;
+        std::vector<T> colors;
         
     };
+
+    typedef ColorScheme_<ofColor> ColorScheme;
+    typedef ColorScheme_<ofFloatColor> FloatColorScheme;
     
 }

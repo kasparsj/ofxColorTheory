@@ -44,8 +44,9 @@ ofColor ColorUtil::rybRotate(ofColor color, float angle) {
     return color;
 }
 
-std::vector<ofColor> ColorUtil::interpolate(const std::vector<ofColor> & colors, int steps) {
-    std::vector<ofColor> result;
+template<typename T>
+std::vector<T> ColorUtil::interpolate(const std::vector<T> & colors, int steps) {
+    std::vector<T> result;
     int pri = colors.size();
     int add = steps - pri;
     int each = ceil((float) add/(pri-1));
@@ -55,13 +56,16 @@ std::vector<ofColor> ColorUtil::interpolate(const std::vector<ofColor> & colors,
         int space = steps - result.size();
         if (space > (pri_steps - (i+1))) {
             for (int j=0; j<MIN(each, space); j++) {
-                ofColor color = ColorUtil::lerpLch(colors.at(i), colors.at(i+1), (float) (j+1)*1/(each+1));
+                T color = ColorUtil::lerpLch(colors.at(i), colors.at(i+1), (float) (j+1)*1/(each+1));
                 result.push_back(color);
             }
         }
     }
     return result;
 }
+
+template std::vector<ofColor> ColorUtil::interpolate<ofColor>(const std::vector<ofColor> &colors, int steps);
+template std::vector<ofFloatColor> ColorUtil::interpolate<ofFloatColor>(const std::vector<ofFloatColor> &colors, int steps);
 
 ofPixels ColorUtil::getPixels(const std::vector<ofColor> &colors) {
     ofPixels pixels;

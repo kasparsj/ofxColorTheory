@@ -4,19 +4,20 @@
 
 namespace ofxColorTheory {
     
-    class ColorWheelScheme : public ColorScheme {
+    template<typename T>
+    class ColorWheelScheme_ : public ColorScheme_<T> {
         
     public:
-        ColorWheelScheme() {
+        ColorWheelScheme_() {
             
         }
-        ColorWheelScheme(ofColor primaryColor) : primaryColor(primaryColor) {
+        ColorWheelScheme_(T primaryColor) : primaryColor(primaryColor) {
             
         }
-        ofColor getPrimaryColor() {
+        T getPrimaryColor() {
             return primaryColor;
         }
-        void setPrimaryColor(ofColor value) {
+        void setPrimaryColor(T value) {
             primaryColor = value;
             regenerate();
         }
@@ -29,10 +30,16 @@ namespace ofxColorTheory {
         }
         
     protected:
-        ofColor primaryColor;
+        T primaryColor;
         virtual void generate() = 0;
-        void regenerate();
+        void regenerate() {
+            this->colors.clear();
+            generate();
+        }
         
     };
+
+    typedef ColorWheelScheme_<ofColor> ColorWheelScheme;
+    typedef ColorWheelScheme_<ofFloatColor> FloatColorWheelScheme;
     
 }

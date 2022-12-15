@@ -4,13 +4,14 @@
 
 namespace ofxColorTheory {
  
-    class SplitComplementary : public ColorWheelScheme {
+    template<typename T>
+    class SplitComplementary_ : public ColorWheelScheme_<T> {
         
     public:
-        SplitComplementary() : ColorWheelScheme() {
+        SplitComplementary_() : ColorWheelScheme_<T>() {
             
         }
-        SplitComplementary(ofColor primaryColor) : ColorWheelScheme(primaryColor) {
+        SplitComplementary_(T primaryColor) : ColorWheelScheme_<T>(primaryColor) {
             generate();
         }
         
@@ -18,5 +19,7 @@ namespace ofxColorTheory {
         void generate();
         
     };
+
+    typedef SplitComplementary_<ofColor> SplitComplementary;
     
 }

@@ -4,13 +4,14 @@
 
 namespace ofxColorTheory {
 
-    class Triad : public ColorWheelScheme {
+    template<typename T>
+    class Triad_ : public ColorWheelScheme_<T> {
         
     public:
-        Triad(float angle = 90) : angle(angle), ColorWheelScheme() {
+        Triad_(float angle = 90) : angle(angle), ColorWheelScheme_<T>() {
             
         }
-        Triad(ofColor primaryColor, float angle = 90) : angle(angle), ColorWheelScheme(primaryColor) {
+        Triad_(T primaryColor, float angle = 90) : angle(angle), ColorWheelScheme_<T>(primaryColor) {
             generate();
         }
         
@@ -21,5 +22,7 @@ namespace ofxColorTheory {
         float angle;
         
     };
+
+    typedef Triad_<ofColor> Triad;
     
 }

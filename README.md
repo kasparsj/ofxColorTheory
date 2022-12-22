@@ -1,3 +1,5 @@
+ofxColorTheory is an openFrameworks addon to generate & interpolate color themes based on colour theory.
+
 Supported color schemes:
 
 * Analogous

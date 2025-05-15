@@ -1,5 +1,5 @@
 #include "Analogous.h"
-#include "ColorUtil.h"
+#include "../ColorUtil.h"
 
 namespace ofxColorTheory {
 

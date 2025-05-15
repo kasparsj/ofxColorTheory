@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ColorWheelScheme.h"
+#include "../ColorWheelScheme.h"
 
 namespace ofxColorTheory {
  

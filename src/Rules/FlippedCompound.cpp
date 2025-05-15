@@ -1,5 +1,5 @@
 #include "FlippedCompound.h"
-#include "ColorUtil.h"
+#include "../ColorUtil.h"
 
 namespace ofxColorTheory {
 

@@ -6,7 +6,7 @@ namespace ofxColorTheory {
 template<typename T>
 void SplitComplementary_<T>::generate() {
     this->colors.push_back(this->primaryColor);
-    float limit = ofColor::limit();
+    float limit = T::limit();
     float bri = this->primaryColor.getBrightness()/limit;
     
     T c1 = ColorUtil::rybRotate(this->primaryColor, 150);
@@ -18,8 +18,5 @@ void SplitComplementary_<T>::generate() {
     this->colors.push_back(c1);
     this->colors.push_back(c2);
 }
-
-template class SplitComplementary_<ofColor>;
-template class SplitComplementary_<ofFloatColor>;
 
 }

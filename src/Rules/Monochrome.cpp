@@ -25,7 +25,4 @@ void Monochrome_<T>::generate() {
     this->colors.push_back(c4);
 }
 
-template class Monochrome_<ofColor>;
-template class Monochrome_<ofFloatColor>;
-
 }

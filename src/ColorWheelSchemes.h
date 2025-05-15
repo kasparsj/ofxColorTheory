@@ -1,16 +1,19 @@
 #pragma once
 
 #include "ColorWheelScheme.h"
-#include "Analogous.h"
-#include "Complementary.h"
-#include "Compound.h"
-#include "SplitComplementary.h"
-#include "FlippedCompound.h"
-#include "Monochrome.h"
-#include "Tetrad.h"
-#include "Triad.h"
-#include "ofMath.h"
+#include "Rules/Analogous.h"
+#include "Rules/Complementary.h"
+#include "Rules/Compound.h"
+#include "Rules/SplitComplementary.h"
+#include "Rules/FlippedCompound.h"
+#include "Rules/Monochrome.h"
+#include "Rules/Tetrad.h"
+#include "Rules/Triad.h"
+#include <random>
 #include <map>
+#include <memory>
+#include <algorithm>
+#include <cctype>
 
 namespace ofxColorTheory {
 
@@ -58,7 +61,10 @@ namespace ofxColorTheory {
         };
         
         static shared_ptr<ColorWheelScheme_<T>> random() {
-            return SCHEMES[(int) ofRandom(SCHEMES.size())];
+            std::random_device rd;
+            std::mt19937 gen(rd());
+            std::uniform_int_distribution<> distrib(0, SCHEMES.size() - 1);
+            return SCHEMES[distrib(gen)];
         }
         
         static shared_ptr<ColorWheelScheme_<T>> get(ColorRule rule) {
@@ -89,8 +95,5 @@ namespace ofxColorTheory {
         }
         
     };
-
-    typedef ColorWheelSchemes_<ofColor> ColorWheelSchemes;
-    typedef ColorWheelSchemes_<ofFloatColor> FloatColorWheelSchemes;
     
 }

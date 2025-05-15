@@ -1,7 +1,6 @@
 #pragma once
 
-#include "ofColor.h"
-#include "ofPixels.h"
+#include <vector>
 #include "ColorUtil.h"
 
 namespace ofxColorTheory {
@@ -18,28 +17,27 @@ namespace ofxColorTheory {
             colors = initialColors;
         }
         
-        std::vector<T> & getColors() {
+        std::vector<T>& getColors() {
             return colors;
         }
-        ofPixels getPixels() {
-            return ColorUtil::getPixels(colors);
-        }
-        T & getColor(int i) {
+        
+        T& getColor(int i) {
             return colors.at(i % colors.size());
         }
-        T & getGeneratedColor(int i) {
+        
+        T& getGeneratedColor(int i) {
+            if (colors.size() <= 1) {
+                return colors.at(0);
+            }
             return colors.at(1 + i % (colors.size() - 1));
         }
+        
         virtual std::vector<T> interpolate(int num) {
             return ColorUtil::interpolate(colors, num);
         }
         
     protected:
         std::vector<T> colors;
-        
     };
-
-    typedef ColorScheme_<ofColor> ColorScheme;
-    typedef ColorScheme_<ofFloatColor> FloatColorScheme;
     
 }

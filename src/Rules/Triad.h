@@ -22,7 +22,5 @@ namespace ofxColorTheory {
         float angle;
         
     };
-
-    typedef Triad_<ofColor> Triad;
     
 }

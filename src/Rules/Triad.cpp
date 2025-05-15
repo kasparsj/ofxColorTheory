@@ -18,8 +18,4 @@ void Triad_<T>::generate() {
     this->colors.push_back(c2);
 }
 
-template class Triad_<ofColor>;
-template class Triad_<ofFloatColor>;
-
-
 }

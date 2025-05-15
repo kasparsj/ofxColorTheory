@@ -19,7 +19,5 @@ namespace ofxColorTheory {
         void generate();
         
     };
-
-    typedef Compound_<ofColor> Compound;
     
 }

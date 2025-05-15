@@ -20,7 +20,7 @@ void FlippedCompound_<T>::generate() {
     this->colors.push_back(c2);
     
     T c3 = ColorUtil::rybRotate(this->primaryColor, -160);
-    c3.setBrightness(MAX(.2f, bri)*limit);
+    c3.setBrightness(std::max(.2f, bri)*limit);
     c3.setSaturation(this->wrap(sat, .25f, .1f, .25f)*limit);
     this->colors.push_back(c3);
     
@@ -34,8 +34,5 @@ void FlippedCompound_<T>::generate() {
     c5.setSaturation(this->wrap(sat, .1f, .8f, .1f)*limit);
     this->colors.push_back(c5);
 }
-
-template class FlippedCompound_<ofColor>;
-template class FlippedCompound_<ofFloatColor>;
 
 }

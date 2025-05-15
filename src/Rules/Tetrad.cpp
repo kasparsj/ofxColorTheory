@@ -20,7 +20,7 @@ void Tetrad_<T>::generate() {
         }
     } else {
         multiplier = (.5f-bri)/.5f;
-        c1.setBrightness(bri+MIN(.2f, MAX(-.2f,.2f*multiplier)));
+        c1.setBrightness(bri+std::min(.2f, std::max(-.2f,.2f*multiplier)));
     }
     
     this->colors.push_back(c1);
@@ -35,17 +35,14 @@ void Tetrad_<T>::generate() {
         }
     } else {
         multiplier = (.5f-bri)/.5f;
-        c2.setBrightness(bri+MIN(.1f, MAX(-.1f,.1f*multiplier)));
+        c2.setBrightness(bri+std::min(.1f, std::max(-.1f,.1f*multiplier)));
     }
     
     this->colors.push_back(c2);
     
-    ofColor c3 = ColorUtil::rybRotate(this->primaryColor, angle * 3);
+    T c3 = ColorUtil::rybRotate(this->primaryColor, angle * 3);
     c3.setBrightness((bri+.1f)*limit);
     this->colors.push_back(c3);
 }
-
-template class Tetrad_<ofColor>;
-template class Tetrad_<ofFloatColor>;
 
 }

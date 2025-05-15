@@ -23,7 +23,5 @@ namespace ofxColorTheory {
         float contrast;
         
     };
-
-    typedef Analogous_<ofColor> Analogous;
     
 }

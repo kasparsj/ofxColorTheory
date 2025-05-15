@@ -31,8 +31,4 @@ void Compound_<T>::generate() {
     c5.setSaturation(this->wrap(this->primaryColor.getSaturation()/255.f, .10f, .80f, .10f)*255.f);
     this->colors.push_back(c5);
 }
-
-template class Compound_<ofColor>;
-template class Compound_<ofFloatColor>;
-
 }

@@ -25,7 +25,5 @@ namespace ofxColorTheory {
         T adjust(T color, float threshold);
         
     };
-
-    typedef Complementary_<ofColor> Complementary;
     
 }

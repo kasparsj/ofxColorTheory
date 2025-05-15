@@ -20,6 +20,4 @@ namespace ofxColorTheory {
         
     };
 
-    typedef Monochrome_<ofColor> Monochrome;
-    
 }

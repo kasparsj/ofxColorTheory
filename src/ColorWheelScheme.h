@@ -38,8 +38,5 @@ namespace ofxColorTheory {
         }
         
     };
-
-    typedef ColorWheelScheme_<ofColor> ColorWheelScheme;
-    typedef ColorWheelScheme_<ofFloatColor> FloatColorWheelScheme;
     
 }

@@ -13,7 +13,7 @@ void Complementary_<T>::generate() {
     this->colors.push_back(adjust(contrasting, 0.4f));
     
     // A soft supporting color: lighter and less saturated
-    ofColor supporting = ofColor(this->primaryColor);
+    T supporting = T(this->primaryColor);
     supporting.setBrightness(0.3f*255.f + this->primaryColor.getBrightness());
     supporting.setSaturation(0.1f*255.f + this->primaryColor.getSaturation() * 0.3f);
     this->colors.push_back(supporting);
@@ -55,21 +55,18 @@ std::vector<T> Complementary_<T>::interpolate(int steps, std::vector<T> &colors)
     int pri = colors.size();
     int add = steps - pri;
     int each = ceil((float) add/(pri-2));
-    int pri_steps = MIN(pri, steps);
+    int pri_steps = std::min(pri, steps);
     for (int i=0; i<pri_steps; i++) {
         result.push_back(colors.at(i));
         int space = steps - result.size();
         if (space > (pri_steps - (i+1)) && i != 2) {
-            for (int j=0; j<MIN(each, space); j++) {
-                ofColor color = ColorUtil::lerpLch(colors.at(i), colors.at(i+1), (float) (j+1)*1/(each+1));
+            for (int j=0; j<std::min(each, space); j++) {
+                T color = ColorUtil::lerpLch(colors.at(i), colors.at(i+1), (float) (j+1)*1/(each+1));
                 result.push_back(color);
             }
         }
     }
     return result;
 }
-
-template class Complementary_<ofColor>;
-template class Complementary_<ofFloatColor>;
 
 }

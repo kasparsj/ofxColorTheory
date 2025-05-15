@@ -25,7 +25,4 @@ void Analogous_<T>::generate() {
     }
 }
 
-template class Analogous_<ofColor>;
-template class Analogous_<ofFloatColor>;
-
 }

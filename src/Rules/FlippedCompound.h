@@ -19,7 +19,5 @@ namespace ofxColorTheory {
         void generate();
         
     };
-
-    typedef FlippedCompound_<ofColor> FlippedCompound;
     
 }

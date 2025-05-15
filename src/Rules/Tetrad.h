@@ -23,7 +23,5 @@ namespace ofxColorTheory {
         float alt;
         
     };
-
-    typedef Tetrad_<ofColor> Tetrad;
     
 }

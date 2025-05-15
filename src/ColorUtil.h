@@ -117,8 +117,9 @@ namespace ofxColorTheory {
                 }
             }
             
-            color.setHue(newHue/360.f*255.0);
-            return color;
+            T c2 = color;
+            c2.setHue(newHue/360.f*255.0);
+            return c2;
         }
         
         // Template methods for color operations

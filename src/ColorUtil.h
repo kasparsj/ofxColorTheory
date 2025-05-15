@@ -7,7 +7,6 @@
 
 namespace ofxColorTheory {
 
-    // Vector3f class to replace ofVec3f
     struct Vector3f {
         float x, y, z;
         

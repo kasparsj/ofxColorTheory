@@ -2,6 +2,6 @@
 
 namespace ofxColorTheory {
 
-const map<int, string> BaseColorWheelSchemes::NAMES = BaseColorWheelSchemes::createColorSchemeNames();
+const std::map<int, std::string> BaseColorWheelSchemes::NAMES = BaseColorWheelSchemes::createColorSchemeNames();
 
 }

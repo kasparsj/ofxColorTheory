@@ -10,6 +10,14 @@ namespace ofxColorTheory {
     class ColorScheme_ {
         
     public:
+        // Default constructor
+        ColorScheme_() {}
+        
+        // Constructor with colors
+        ColorScheme_(const std::vector<T>& initialColors) {
+            colors = initialColors;
+        }
+        
         std::vector<T> & getColors() {
             return colors;
         }

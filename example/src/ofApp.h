@@ -26,7 +26,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    shared_ptr<ColorWheelScheme> scheme;
+    shared_ptr<ColorWheelScheme_<ofColor>> scheme;
     vector<ofColor> colors;
     
     ofxPanel panel;

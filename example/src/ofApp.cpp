@@ -1,11 +1,26 @@
 #include "ofApp.h"
 #include "ColorWheelSchemes.h"
 
+namespace ofxColorTheory {
+
+template class Analogous_<ofColor>;
+template class Complementary_<ofColor>;
+template class Compound_<ofColor>;
+template class FlippedCompound_<ofColor>;
+template class Monochrome_<ofColor>;
+template class SplitComplementary_<ofColor>;
+template class Tetrad_<ofColor>;
+template class Triad_<ofColor>;
+
+template<>
+const std::vector<std::shared_ptr<ColorWheelScheme_<ofColor>>> ColorWheelSchemes_<ofColor>::SCHEMES = ColorWheelSchemes_<ofColor>::createColorSchemes();
+}
+
 //--------------------------------------------------------------
 void ofApp::setup(){
     group.setName("Color Theory");
     group.add(primaryColor.set("Primary Color", ofColor::magenta));
-    group.add(colorScheme.set("Color Scheme", 6, 0, ColorWheelSchemes::SCHEMES.size()-1));
+    group.add(colorScheme.set("Color Scheme", 6, 0, ColorWheelSchemes_<ofColor>::SCHEMES.size()-1));
     group.add(colorSchemeName);
     group.add(numColors.set("Num Colors", 256, 1, 256));
     
@@ -15,8 +30,8 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update() {
-    colorSchemeName.set(ColorWheelSchemes::NAMES.at(colorScheme.get()));
-    scheme = ColorWheelSchemes::SCHEMES.at(colorScheme.get());
+    colorSchemeName.set(ColorWheelSchemes_<ofColor>::NAMES.at(colorScheme.get()));
+    scheme = ColorWheelSchemes_<ofColor>::SCHEMES.at(colorScheme.get());
     scheme->setPrimaryColor(primaryColor.get());
     colors = scheme->interpolate(numColors.get());
 }
@@ -37,7 +52,7 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    if (key >= '1' && key < '1' + ColorWheelSchemes::SCHEMES.size()) {
+    if (key >= '1' && key < '1' + ColorWheelSchemes_<ofColor>::SCHEMES.size()) {
         colorScheme.set(key - '1');
     }
     //else if (key == 's') {

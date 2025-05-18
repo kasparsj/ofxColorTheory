@@ -16,7 +16,7 @@ namespace ofxColorTheory {
         }
         
     protected:
-        void generate() {
+        std::vector<T>& generate() {
             this->colors.push_back(this->primaryColor);
             float limit = T::limit();
             float bri = this->primaryColor.getBrightness()/limit;
@@ -55,6 +55,8 @@ namespace ofxColorTheory {
             T c3 = ColorUtil::rybRotate(this->primaryColor, angle * 3);
             c3.setBrightness((bri+.1f)*limit);
             this->colors.push_back(c3);
+            
+            return this->colors;
         }
         
     private:

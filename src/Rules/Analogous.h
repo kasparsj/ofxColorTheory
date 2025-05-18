@@ -16,8 +16,7 @@ namespace ofxColorTheory {
         }
         
     protected:
-        void generate() {
-            this->colors.push_back(this->primaryColor);
+        std::vector<T>& generate() {
             T newColor;
             float array[4][2] = {{1.0, 2.2}, {2.0, 1.0}, {-1.0, -0.5}, {-2.0, 1.0}};
             for (int i=0; i<4; i++) {
@@ -35,6 +34,7 @@ namespace ofxColorTheory {
                 newColor.setSaturation(newColor.getSaturation()-0.05f*255.f);
                 this->colors.push_back(newColor);
             }
+            return this->colors;
         }
         
     private:

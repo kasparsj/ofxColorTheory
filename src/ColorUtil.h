@@ -6,6 +6,11 @@
 #define RYB_WHEEL_SIZE 25
 
 namespace ofxColorTheory {
+    
+    // Colorspace constants
+    const int COLORSPACE_RGB = 0;
+    const int COLORSPACE_HSB = 1;
+    const int COLORSPACE_LCH = 2;
 
     struct Vector3f {
         float x, y, z;
@@ -61,7 +66,7 @@ namespace ofxColorTheory {
         
     public:
         template<typename T>
-        static std::vector<T> interpolate(const std::vector<T>& colors, int steps) {
+        static std::vector<T> interpolate(const std::vector<T>& colors, int steps, int colorspace = COLORSPACE_LCH) {
             std::vector<T> result;
             int pri = colors.size();
             int add = steps - pri;
@@ -72,7 +77,22 @@ namespace ofxColorTheory {
                 int space = steps - result.size();
                 if (space > (pri_steps - (i+1))) {
                     for (int j=0; j<std::min(each, space); j++) {
-                        T color = lerpLch(colors.at(i), colors.at(i+1), (float) (j+1)*1/(each+1));
+                        T color;
+                        float amt = (float) (j+1)*1/(each+1);
+                        
+                        switch (colorspace) {
+                            case COLORSPACE_RGB:
+                                color = lerpRGB(colors.at(i), colors.at(i+1), amt);
+                                break;
+                            case COLORSPACE_HSB:
+                                color = lerpHSB(colors.at(i), colors.at(i+1), amt);
+                                break;
+                            case COLORSPACE_LCH:
+                            default:
+                                color = lerpLch(colors.at(i), colors.at(i+1), amt);
+                                break;
+                        }
+                        
                         result.push_back(color);
                     }
                 }
@@ -189,9 +209,16 @@ namespace ofxColorTheory {
         }
         
         template<typename T>
-        static T lerpColors(const T& c1, const T& c2, float p) {
-            // Default to LCH interpolation 
-            return lerpLch(c1, c2, p);
+        static T lerpColors(const T& c1, const T& c2, float p, int colorspace = COLORSPACE_LCH) {
+            switch (colorspace) {
+                case COLORSPACE_RGB:
+                    return lerpRGB(c1, c2, p);
+                case COLORSPACE_HSB:
+                    return lerpHSB(c1, c2, p);
+                case COLORSPACE_LCH:
+                default:
+                    return lerpLch(c1, c2, p);
+            }
         }
         
         template<typename T>

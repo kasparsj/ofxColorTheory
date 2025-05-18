@@ -16,7 +16,7 @@ namespace ofxColorTheory {
         }
         
     protected:
-        void generate() {
+        std::vector<T>& generate() {
             this->colors.push_back(this->primaryColor);
             
             T c1 = ColorUtil::rybRotate(this->primaryColor, 30);
@@ -42,6 +42,8 @@ namespace ofxColorTheory {
             c5.setBrightness(this->wrap(this->primaryColor.getBrightness()/255.f, .40f, .20f, .40f)*255.f);
             c5.setSaturation(this->wrap(this->primaryColor.getSaturation()/255.f, .10f, .80f, .10f)*255.f);
             this->colors.push_back(c5);
+            
+            return this->colors;
         }
         
     };

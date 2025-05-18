@@ -19,7 +19,6 @@ namespace ofxColorTheory {
         }
         void setPrimaryColor(T value) {
             primaryColor = value;
-            regenerate();
         }
         static float wrap(float x, float min, float threshold, float plus) {
             if (x - min < threshold) {
@@ -28,14 +27,14 @@ namespace ofxColorTheory {
                 return x - min;
             }
         }
+        virtual std::vector<T>& generate() = 0;
+        std::vector<T>& regenerate() {
+            this->colors.clear();
+            return generate();
+        }
         
     protected:
         T primaryColor;
-        virtual void generate() = 0;
-        void regenerate() {
-            this->colors.clear();
-            generate();
-        }
         
     };
     

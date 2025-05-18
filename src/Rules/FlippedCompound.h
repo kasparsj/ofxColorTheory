@@ -16,7 +16,7 @@ namespace ofxColorTheory {
         }
         
     protected:
-        void generate() {
+        std::vector<T>& generate() {
             this->colors.push_back(this->primaryColor);
             float limit = T::limit();
             float sat = this->primaryColor.getSaturation()/limit;
@@ -45,6 +45,8 @@ namespace ofxColorTheory {
             c5.setBrightness(this->wrap(bri, .4f, .2f, .4f)*limit);
             c5.setSaturation(this->wrap(sat, .1f, .8f, .1f)*limit);
             this->colors.push_back(c5);
+            
+            return this->colors;
         }
         
     };

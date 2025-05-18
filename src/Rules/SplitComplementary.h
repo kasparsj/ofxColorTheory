@@ -16,7 +16,7 @@ namespace ofxColorTheory {
         }
         
     protected:
-        void generate() {
+        std::vector<T>& generate() {
             this->colors.push_back(this->primaryColor);
             float limit = T::limit();
             float bri = this->primaryColor.getBrightness()/limit;
@@ -29,6 +29,8 @@ namespace ofxColorTheory {
             
             this->colors.push_back(c1);
             this->colors.push_back(c2);
+            
+            return this->colors;
         }
         
     };

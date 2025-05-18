@@ -37,7 +37,7 @@ namespace ofxColorTheory {
         }
         
     protected:
-        void generate() {
+        std::vector<T>& generate() {
             // original
             this->colors.push_back(this->primaryColor);
             
@@ -65,6 +65,8 @@ namespace ofxColorTheory {
             supportingComplement.setBrightness(0.3f*255.f + complement.getBrightness());
             supportingComplement.setSaturation(0.1f*255.f + complement.getSaturation() * 0.25f);
             this->colors.push_back(supportingComplement);
+            
+            return this->colors;
         }
 
         T adjust(T target, float threshold) {

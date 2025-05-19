@@ -22,6 +22,8 @@ void ofApp::setup(){
     group.add(primaryColor.set("Primary Color", ofColor::magenta));
     group.add(colorScheme.set("Color Scheme", 6, 0, ColorWheelSchemes_<ofColor>::SCHEMES.size()-1));
     group.add(colorSchemeName);
+    group.add(colorSpace.set("Color Space", 2, 0, 2));
+    group.add(colorSpaceName);
     group.add(numColors.set("Num Colors", 256, 1, 256));
     
     panel.setup();
@@ -30,10 +32,19 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update() {
-    colorSchemeName.set(ColorWheelSchemes_<ofColor>::NAMES.at(colorScheme.get()));
-    scheme = ColorWheelSchemes_<ofColor>::SCHEMES.at(colorScheme.get());
-    scheme->setPrimaryColor(primaryColor.get());
-    colors = scheme->interpolate(numColors.get());
+    std::string newName = ColorWheelSchemes_<ofColor>::NAMES.at(colorScheme.get());
+    std::string newSpace = colorSpaces.at(colorSpace.get());
+    ofColor newColor = primaryColor.get();
+    int newCount = numColors.get();
+    if (colorSchemeName.get() != newName || colorSpaceName.get() != newSpace ||
+        scheme->getPrimaryColor() != newColor || colors.size() != newCount) {
+        colorSchemeName.set(newName);
+        colorSpaceName.set(newSpace);
+        scheme = ColorWheelSchemes_<ofColor>::SCHEMES.at(colorScheme.get());
+        scheme->setPrimaryColor(newColor);
+        scheme->regenerate();
+        colors = scheme->interpolate(newCount, colorSpace.get());
+    }
 }
 
 //--------------------------------------------------------------

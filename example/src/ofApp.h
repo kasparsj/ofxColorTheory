@@ -33,7 +33,10 @@ class ofApp : public ofBaseApp{
     ofParameterGroup group;
     ofParameter<ofColor> primaryColor;
     ofParameter<int> colorScheme;
-    ofParameter<string> colorSchemeName;
+    ofReadOnlyParameter<string, ofApp> colorSchemeName;
+    ofParameter<int> colorSpace;
+    ofReadOnlyParameter<string, ofApp> colorSpaceName;
     ofParameter<int> numColors;
 		
+    std::vector<string> colorSpaces = {"RGB", "HSB", "CIELCh"};
 };

@@ -214,7 +214,8 @@ namespace ofxColorTheory {
         
         template<typename T>
         static T lerpRGB(const T& c1, const T& c2, float amt) {
-            return c1.lerp(c2, amt);
+            T c11 = c1;
+            return c11.lerp(c2, amt);
         }
         
         template<typename T>

@@ -32,8 +32,8 @@ namespace ofxColorTheory {
             return colors.at(1 + i % (colors.size() - 1));
         }
         
-        virtual std::vector<T> interpolate(int num, int colorspace = COLORSPACE_LCH) {
-            return ColorUtil::interpolate(colors, num, colorspace);
+        virtual std::vector<T> interpolate(int num, int colorspace = COLORSPACE_LCH, const std::vector<float>* positions = nullptr) {
+            return ColorUtil::interpolate(colors, num, colorspace, positions);
         }
         
     protected:

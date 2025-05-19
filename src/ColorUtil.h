@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <cmath>
+#include <algorithm> // For std::sort, std::min, std::max
 
 #define RYB_WHEEL_SIZE 25
 
@@ -66,37 +67,95 @@ namespace ofxColorTheory {
         
     public:
         template<typename T>
-        static std::vector<T> interpolate(const std::vector<T>& colors, int steps, int colorspace = COLORSPACE_LCH) {
+        static std::vector<T> interpolate(const std::vector<T>& colors, int steps, int colorspace = COLORSPACE_LCH, const std::vector<float>* positions = nullptr) {
             std::vector<T> result;
-            int pri = colors.size();
-            int add = steps - pri;
-            int each = ceil((float) add/(pri-1));
-            int pri_steps = std::min(pri, steps);
-            for (int i=0; i<pri_steps; i++) {
-                result.push_back(colors.at(i));
-                int space = steps - result.size();
-                if (space > (pri_steps - (i+1))) {
-                    for (int j=0; j<std::min(each, space); j++) {
-                        T color;
-                        float amt = (float) (j+1)*1/(each+1);
-                        
-                        switch (colorspace) {
-                            case COLORSPACE_RGB:
-                                color = lerpRGB(colors.at(i), colors.at(i+1), amt);
-                                break;
-                            case COLORSPACE_HSB:
-                                color = lerpHSB(colors.at(i), colors.at(i+1), amt);
-                                break;
-                            case COLORSPACE_LCH:
-                            default:
-                                color = lerpLch(colors.at(i), colors.at(i+1), amt);
-                                break;
-                        }
-                        
-                        result.push_back(color);
-                    }
-                }
+            
+            // Validate inputs
+            if (colors.empty()) {
+                return result;
             }
+            
+            if (colors.size() == 1) {
+                // If only one color, just return that color repeated
+                for (int i = 0; i < steps; i++) {
+                    result.push_back(colors[0]);
+                }
+                return result;
+            }
+            
+            // Generate default positions if none are provided or if count doesn't match
+            std::vector<float> defaultPositions;
+            const std::vector<float>* posToUse = positions;
+            
+            if (positions == nullptr || positions->size() != colors.size()) {
+                // Create evenly spaced positions from 0 to 1
+                for (size_t i = 0; i < colors.size(); i++) {
+                    defaultPositions.push_back((float)i / (colors.size() - 1));
+                }
+                posToUse = &defaultPositions;
+            }
+            
+            // Sort the colors by position if provided
+            std::vector<std::pair<float, T>> colorPairs;
+            for (size_t i = 0; i < colors.size(); i++) {
+                colorPairs.push_back(std::make_pair((*posToUse)[i], colors[i]));
+            }
+            
+            // Sort by position
+            std::sort(colorPairs.begin(), colorPairs.end(), 
+                [](const std::pair<float, T>& a, const std::pair<float, T>& b) {
+                    return a.first < b.first;
+                });
+            
+            // Now interpolate between colors based on their positions
+            if (steps <= 1) {
+                result.push_back(colorPairs[0].second);
+                return result;
+            }
+            
+            // Calculate step positions
+            for (int i = 0; i < steps; i++) {
+                float pos = (float)i / (steps - 1);
+                
+                // Find the color segment for this position
+                size_t index = 0;
+                while (index < colorPairs.size() - 1 && colorPairs[index + 1].first < pos) {
+                    index++;
+                }
+                
+                // Handle edge cases
+                if (index >= colorPairs.size() - 1) {
+                    result.push_back(colorPairs.back().second);
+                    continue;
+                }
+                
+                if (pos <= colorPairs[0].first) {
+                    result.push_back(colorPairs[0].second);
+                    continue;
+                }
+                
+                // Calculate interpolation amount between the two colors
+                float start = colorPairs[index].first;
+                float end = colorPairs[index + 1].first;
+                float amt = (pos - start) / (end - start);
+                
+                T color;
+                switch (colorspace) {
+                    case COLORSPACE_RGB:
+                        color = lerpRGB(colorPairs[index].second, colorPairs[index + 1].second, amt);
+                        break;
+                    case COLORSPACE_HSB:
+                        color = lerpHSB(colorPairs[index].second, colorPairs[index + 1].second, amt);
+                        break;
+                    case COLORSPACE_LCH:
+                    default:
+                        color = lerpLch(colorPairs[index].second, colorPairs[index + 1].second, amt);
+                        break;
+                }
+                
+                result.push_back(color);
+            }
+            
             return result;
         }
 

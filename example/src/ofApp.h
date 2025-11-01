@@ -26,14 +26,17 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-    shared_ptr<ColorWheelScheme> scheme;
+    shared_ptr<ColorWheelScheme_<ofColor>> scheme;
     vector<ofColor> colors;
     
     ofxPanel panel;
     ofParameterGroup group;
     ofParameter<ofColor> primaryColor;
     ofParameter<int> colorScheme;
-    ofParameter<string> colorSchemeName;
+    ofReadOnlyParameter<string, ofApp> colorSchemeName;
+    ofParameter<int> colorSpace;
+    ofReadOnlyParameter<string, ofApp> colorSpaceName;
     ofParameter<int> numColors;
 		
+    std::vector<string> colorSpaces = {"RGB", "HSB", "CIELCh"};
 };

@@ -1,33 +1,43 @@
 #pragma once
 
-#include "ofColor.h"
-#include "ofPixels.h"
+#include <vector>
 #include "ColorUtil.h"
 
 namespace ofxColorTheory {
 
-    class ColorScheme {
+    template<typename T>
+    class ColorScheme_ {
         
     public:
-        std::vector<ofColor> & getColors() {
+        // Default constructor
+        ColorScheme_() {}
+        
+        // Constructor with colors
+        ColorScheme_(const std::vector<T>& initialColors) {
+            colors = initialColors;
+        }
+        
+        std::vector<T>& getColors() {
             return colors;
         }
-        ofPixels getPixels() {
-            return ColorUtil::getPixels(colors);
-        }
-        ofColor & getColor(int i) {
+        
+        T& getColor(int i) {
             return colors.at(i % colors.size());
         }
-        ofColor & getGeneratedColor(int i) {
+        
+        T& getGeneratedColor(int i) {
+            if (colors.size() <= 1) {
+                return colors.at(0);
+            }
             return colors.at(1 + i % (colors.size() - 1));
         }
-        virtual std::vector<ofColor> interpolate(int num) {
-            return ColorUtil::interpolate(colors, num);
+        
+        virtual std::vector<T> interpolate(int num, int colorspace = COLORSPACE_LCH, const std::vector<float>* positions = nullptr) {
+            return ColorUtil::interpolate(colors, num, colorspace, positions);
         }
         
     protected:
-        std::vector<ofColor> colors;
-        
+        std::vector<T> colors;
     };
     
 }

@@ -4,21 +4,21 @@
 
 namespace ofxColorTheory {
     
-    class ColorWheelScheme : public ColorScheme {
+    template<typename T>
+    class ColorWheelScheme_ : public ColorScheme_<T> {
         
     public:
-        ColorWheelScheme() {
+        ColorWheelScheme_() {
             
         }
-        ColorWheelScheme(ofColor primaryColor) : primaryColor(primaryColor) {
+        ColorWheelScheme_(T primaryColor) : primaryColor(primaryColor) {
             
         }
-        ofColor getPrimaryColor() {
+        T getPrimaryColor() {
             return primaryColor;
         }
-        void setPrimaryColor(ofColor value) {
+        void setPrimaryColor(T value) {
             primaryColor = value;
-            regenerate();
         }
         static float wrap(float x, float min, float threshold, float plus) {
             if (x - min < threshold) {
@@ -27,11 +27,14 @@ namespace ofxColorTheory {
                 return x - min;
             }
         }
+        virtual std::vector<T>& generate() = 0;
+        std::vector<T>& regenerate() {
+            this->colors.clear();
+            return generate();
+        }
         
     protected:
-        ofColor primaryColor;
-        virtual void generate() = 0;
-        void regenerate();
+        T primaryColor;
         
     };
     

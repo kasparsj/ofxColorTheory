@@ -1,21 +1,36 @@
 #pragma once
 
-#include "ColorWheelScheme.h"
+#include "../ColorWheelScheme.h"
 
 namespace ofxColorTheory {
 
-    class Triad : public ColorWheelScheme {
+    template<typename T>
+    class Triad_ : public ColorWheelScheme_<T> {
         
     public:
-        Triad(float angle = 90) : angle(angle), ColorWheelScheme() {
+        Triad_(float angle = 90) : angle(angle), ColorWheelScheme_<T>() {
             
         }
-        Triad(ofColor primaryColor, float angle = 90) : angle(angle), ColorWheelScheme(primaryColor) {
+        Triad_(T primaryColor, float angle = 90) : angle(angle), ColorWheelScheme_<T>(primaryColor) {
             generate();
         }
         
     protected:
-        void generate();
+        std::vector<T>& generate() {
+            this->colors.push_back(this->primaryColor);
+            float limit = T::limit();
+            float bri = this->primaryColor.getBrightness()/limit;
+            
+            T c1 = ColorUtil::rybRotate(this->primaryColor, angle);
+            c1.setBrightness((bri+.1f)*limit);
+            this->colors.push_back(c1);
+            
+            T c2 = ColorUtil::rybRotate(this->primaryColor, -angle);
+            c2.setBrightness((bri+.1f)*limit);
+            this->colors.push_back(c2);
+            
+            return this->colors;
+        }
         
     private:
         float angle;

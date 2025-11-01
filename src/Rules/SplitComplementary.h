@@ -1,21 +1,37 @@
 #pragma once
 
-#include "ColorWheelScheme.h"
+#include "../ColorWheelScheme.h"
 
 namespace ofxColorTheory {
  
-    class SplitComplementary : public ColorWheelScheme {
+    template<typename T>
+    class SplitComplementary_ : public ColorWheelScheme_<T> {
         
     public:
-        SplitComplementary() : ColorWheelScheme() {
+        SplitComplementary_() : ColorWheelScheme_<T>() {
             
         }
-        SplitComplementary(ofColor primaryColor) : ColorWheelScheme(primaryColor) {
+        SplitComplementary_(T primaryColor) : ColorWheelScheme_<T>(primaryColor) {
             generate();
         }
         
     protected:
-        void generate();
+        std::vector<T>& generate() {
+            this->colors.push_back(this->primaryColor);
+            float limit = T::limit();
+            float bri = this->primaryColor.getBrightness()/limit;
+            
+            T c1 = ColorUtil::rybRotate(this->primaryColor, 150);
+            T c2 = ColorUtil::rybRotate(this->primaryColor, 210);
+            
+            c1.setBrightness((bri+.1f)*limit);
+            c2.setBrightness((bri+.1f)*limit);
+            
+            this->colors.push_back(c1);
+            this->colors.push_back(c2);
+            
+            return this->colors;
+        }
         
     };
     

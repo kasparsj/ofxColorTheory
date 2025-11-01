@@ -3,6 +3,7 @@
 #include <vector>
 #include <cmath>
 #include <algorithm> // For std::sort, std::min, std::max
+#include <glm/vec3.hpp>
 
 #define RYB_WHEEL_SIZE 25
 
@@ -18,6 +19,14 @@ namespace ofxColorTheory {
         
         Vector3f() : x(0), y(0), z(0) {}
         Vector3f(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
+        
+        // Constructor from glm::vec3
+        Vector3f(const glm::vec3& v) : x(v.x), y(v.y), z(v.z) {}
+        
+        // Conversion operator to glm::vec3
+        operator glm::vec3() const {
+            return glm::vec3(x, y, z);
+        }
     };
 
     // Helper function to clamp a value between min and max

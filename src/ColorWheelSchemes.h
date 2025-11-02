@@ -33,8 +33,8 @@ namespace ofxColorTheory {
                 names[(int) ColorRule::COMPOUND] = "Compound";
                 names[(int) ColorRule::FLIPPED_COMPOUND] = "FlippedCompound";
                 names[(int) ColorRule::MONOCHROME] = "Monochrome";
-                names[(int) ColorRule::TETRAD] = "Tetrad";
                 names[(int) ColorRule::TRIAD] = "Triad";
+                names[(int) ColorRule::TETRAD] = "Tetrad";
                 return names;
             };
     };
@@ -53,8 +53,8 @@ namespace ofxColorTheory {
             v.push_back(std::shared_ptr<ColorWheelScheme_<T>>(new Compound_<T>()));
             v.push_back(std::shared_ptr<ColorWheelScheme_<T>>(new FlippedCompound_<T>()));
             v.push_back(std::shared_ptr<ColorWheelScheme_<T>>(new Monochrome_<T>()));
-            v.push_back(std::shared_ptr<ColorWheelScheme_<T>>(new Tetrad_<T>()));
             v.push_back(std::shared_ptr<ColorWheelScheme_<T>>(new Triad_<T>()));
+            v.push_back(std::shared_ptr<ColorWheelScheme_<T>>(new Tetrad_<T>()));
             return v;
         };
         

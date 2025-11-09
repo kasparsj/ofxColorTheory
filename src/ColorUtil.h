@@ -206,7 +206,7 @@ namespace ofxColorTheory {
             }
             
             T c2 = color;
-            c2.setHue(newHue/360.f*255.0);
+            c2.setHue(newHue/360.f * T::limit());
             return c2;
         }
         
